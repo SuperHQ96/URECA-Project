@@ -1,0 +1,38 @@
+<% include ../../../partials/header %>
+<% include ../../../partials/navbar %>
+<div class="container">
+  <div style="width: 50%">
+    <form action="/database/examiner/new" method="GET">
+      <h1>Moderators<input class="btn btn-md btn-default" type="submit" value="New Record" style="float: right"></h1>
+    </form>
+    </br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Course code</th>
+          <th scope="col">Initial</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% moderators.forEach(function (moderator){ %>
+          <tr>
+            <td><%= moderator.course_code %></td>
+            <td><%= moderator.initial %></td>
+            <td>
+              <form method="POST" action="/database/moderator/delete">
+                <input type="hidden" name="course_code" value="<%= moderator.course_code %>">
+                <input type="hidden" name="initial" value="<%= moderator.initial %>">
+                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+              </form>
+            </td>
+
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

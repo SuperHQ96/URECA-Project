@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Send Email</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		function loadTemplate() {
+      $('#target').html('<p>Loading...</p>');
+      var course_code = document.getElementById("course_code_selector").value;
+
+      $.post('/email/get_data', {course_code: course_code}).done(function(data){
+        var template = $('#template').html();
+  		  Mustache.parse(template);   // optional, speeds up future uses
+  		  var rendered = Mustache.render(template, {examiner_moderator: 'Sir', course_code: course_code, course_title: data.course_title, coordinator: data.coordinator, examiners: data.examiners, moderators: data.moderators, area_lead_appointment: data.area_lead_appointment, area_lead: data.area_lead});
+  		  $('#target').html(rendered);
+      })
+		}
+    function sendEmail() {
+      var user = document.getElementById("user").value;
+      var password = document.getElementById("pwd").value;
+      var receiver = document.getElementById("receiver").value;
+      var subject = document.getElementById("subject").value;
+      var content = document.getElementById("target").innerHTML;
+      $.post('/send_email', {user: user, password: password, receiver: receiver, subject: subject, content: content}).done(function(data){
+        if(data.message == "Success") {
+          $('#target').html('<p>Successfully sent.</p>');
+        }
+      });
+    }
+	</script>
+</head>
+<body>
+	<% include ../../partials/navbar %>
+    <div class="container">
+    	<h1>Send Email</h1>
+      <div class="form-group row">
+        <div class="col-md-4">
+          <label for="user">Email:</label>
+          <input type="text" class="form-control" id="user">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-4">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" id="pwd">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-4">
+          <label for="receiver">To:</label>
+          <input type="text" class="form-control" id="receiver">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-4">
+          <label for="subject">Subject:</label>
+          <input type="text" class="form-control" id="subject">
+        </div>
+      </div>
+      <select id="course_code_selector" onchange="loadTemplate()" class="form-control">
+        <% course_codes.forEach(function(course_code, index){ %>
+          <option value="<%= course_code.course_code %>"><%= course_code.course_code %>
+          </option>
+        <% }) %>
+      </select>
+    	<div id="target">Please select a course code.</div>
+      <button type="button" class="btn btn-primary" onclick="sendEmail()">Send</button>
+    </div>
+	<script id="template" type="x-tmpl-mustache">
+    <div>
+      <p>Dear {{examiner_moderator}}</p>
+      <p><b>Appointment of Examiners/Moderators for Semester 2 AY18/19 Examinations</b></p>
+      <p>I am pleased to appoint you as examiner/moderator for the following course in Semester 1, AY2018/19</p>
+      <table>
+        <tr>
+          <th>Course Code</th>
+          <th>Course Title</th>
+          <th>Coordinator</th>
+          <th>Examiner</th>
+          <th>Moderator</th>
+        </tr>
+        <tr>
+          <td>{{course_code}}</td>
+          <td>{{course_title}}</td>
+          <td>{{coordinator}}</td>
+          <td>{{examiners}}</td>
+          <td>{{moderators}}</td>
+        </tr>
+      </table>
+      <p>Please work closely with the course coordinator and {{area_lead_appointment}} {{area_lead}} (Area Lead) on the examination and assessments(s), if any, for this course.</p>
+      <p>Many thanks for your contributions and support in this matter.</p>
+      <br>
+      <p>Yours sincerely,</p>
+      <p>Associate Chair (Academic), School of EEE</p>
+    </div>
+
+
+  </script>
+</body>
+</html>

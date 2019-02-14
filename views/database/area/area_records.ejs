@@ -1,0 +1,49 @@
+    <% include ../../../partials/header %>
+    <% include ../../../partials/navbar %>
+    <div class="container">
+      <form action="/database/area/new" method="GET">
+        <h1>Area<input class="btn btn-md btn-default" type="submit" value="New Record" style="float: right"></h1>
+      </form>
+      </br>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Area Code</th>
+            <th scope="col">Area Lead</th>
+            <th scope="col">Area Lead Email</th>
+            <th scope="col">Area Admin</th>
+            <th scope="col">Area Admin Email</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% areas.forEach(function (area){ %>
+            <tr>
+
+              <th scope="row"><%= area.area_code %></th>
+              <td><%= area.area_lead %></td>
+              <td><%= area.area_lead_email %></td>
+              <td><%= area.area_admin %></td>
+              <td><%= area.area_admin_email %></td>
+              <td>
+                <form method="POST" action="/database/area/update">
+                  <input type="hidden" name="area_code" value="<%= area.area_code %>">
+                  <input class="btn btn-sm btn-primary btn-block" type="submit" value="Update">
+                </form>
+              </td>
+              <td>
+                <form method="POST" action="/database/area/delete">
+                  <input type="hidden" name="area_code" value="<%= area.area_code %>">
+                  <input class="btn btn-sm btn-danger btn-block" type="submit" value="Delete">
+                </form>
+              </td>
+
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+  </body>
+</html>

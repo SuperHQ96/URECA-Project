@@ -1,0 +1,44 @@
+<% include ../../../partials/header %>
+<% include ../../../partials/navbar %>
+  <div class="container">
+    <h1><b>Insert new course record</b></h1>
+    </br>
+    <form  action="/course/new" method="post">
+      <div class="form-group row">
+          <div class="col-xs-8">
+            <h2>Course Code</h2>
+            <input class="form-control" type="text" name="course_code" placeholder="Course code" required>
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-xs-8">
+            <h2>Alternative Course Code</h2>
+            <input class="form-control" type="text" name="alternative_course_code" placeholder="Alternative course code">
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-xs-8">
+            <h2>Course Title</h2>
+            <input class="form-control" type="text" name="course_title" placeholder="Course title" required>
+          </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-xs-4">
+          <h2>Area Code</h2>
+          <select class="form-control" name="area_code">
+            <% area_codes.forEach(function(area_code){ %>
+              <option value="<%= area_code.area_code %>"><%= area_code.area_code %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+      </br>
+      <div class="form-group">
+          <input class="btn btn-lg btn-primary" type="submit" value="Insert Record">
+      </div>
+    </form>
+  </div>
+
+
+  </body>
+</html>

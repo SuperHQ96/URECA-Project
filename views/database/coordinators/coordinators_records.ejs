@@ -1,0 +1,38 @@
+<% include ../../../partials/header %>
+<% include ../../../partials/navbar %>
+<div class="container">
+  <div style="width: 50%">
+    <form action="/database/coordinator/new" method="GET">
+      <h1>Coordinators<input class="btn btn-md btn-default" type="submit" value="New Record" style="float: right"></h1>
+    </form>
+    </br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Course code</th>
+          <th scope="col">Initial</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% coordinators.forEach(function (coordinator){ %>
+          <tr>
+            <td><%= coordinator.course_code %></td>
+            <td><%= coordinator.initial %></td>
+            <td>
+              <form method="POST" action="/database/coordinator/delete">
+                <input type="hidden" name="course_code" value="<%= coordinator.course_code %>">
+                <input type="hidden" name="initial" value="<%= coordinator.initial %>">
+                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+              </form>
+            </td>
+
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

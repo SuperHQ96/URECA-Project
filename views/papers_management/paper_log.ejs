@@ -1,0 +1,51 @@
+<% include ../../partials/header %>
+<% include ../../partials/navbar %>
+  <div class="container">
+    <% if(next_due_date) { %>
+      <div class="alert alert-info">
+        <h1> Next Due Date:</h1>
+        <h3><%= next_due_date.dueDate %> <%= next_due_date.dueDateDescription %></h3>
+        <div class="form-group row">
+          <form action="#" method="POST">
+            <div class="col-md-4">
+              <input type="hidden" name="dueDateCode" value="<%= next_due_date.dueDateCode %>">
+              <input type="hidden" name="paperID" value="<%= next_due_date.paperID %>">
+              <input class="btn btn-sm btn-primary btn-block" type="submit" value="Clear Deadline">
+            </div>
+          </form>
+        </div>
+      </div>
+      </br>
+    <% } %>
+    <form action="/paper/update_status" method="POST">
+      <input type="hidden" name="paperID" value="<%= next_due_date.paperID %>">
+      <h1>History for <%= paper.course_code %> (Y<%= paper.paperYear %> Semester <%= paper.paperSem %>)<input class="btn btn-md btn-default" type="submit" value="Update Status" style="float: right"></h1>
+    </form>
+
+  </br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+        <th scope="col">Status</th>
+        <th scope="col">Remarks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% paper_logs.forEach(function (paper_log){ %>
+        <tr>
+
+          <td><%= paper_log.paperDate %></td>
+          <td><%= paper_log.paperTime %></td>
+          <td><%= paper_log.paperStatus %></td>
+          <td><%= paper_log.remarks %></td>
+
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  </div>
+</body>
+</html>

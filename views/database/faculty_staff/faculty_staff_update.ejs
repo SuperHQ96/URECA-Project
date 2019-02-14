@@ -1,0 +1,45 @@
+<% include ../../../partials/header %>
+<% include ../../../partials/navbar %>
+
+  <div class="container">
+    <h1>Update fields for staff <%= staff.faculty_name %> (<%= staff.initial %>)</h1>
+    <form action="/database/faculty_staff/updating" method="post">
+      <div class="form-group row">
+          <div class="col-xs-8">
+            <h2>Name</h2>
+            <input class="form-control" type="text" name="faculty_name" placeholder="Name" value="<%= staff.faculty_name %>">
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-xs-8">
+            <h2>Email Address</h2>
+            <input class="form-control" type="text" name="email_address" placeholder="Email address" value="<%= staff.email_address %>">
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-xs-8">
+            <h2>Current Appointment</h2>
+            <input class="form-control" type="text" name="current_appointment" placeholder="Current appointment" value="<%= staff.current_appointment %>">
+          </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-xs-4">
+          <h2>Area Code</h2>
+          <select class="form-control" name="area_code" value="<%= staff.area_code %>">
+            <% area_codes.forEach(function(area_code){ %>
+              <option value="<%= area_code.area_code %>"><%= area_code.area_code %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+      <input type="hidden" name="initial" value="<%= staff.initial %>">
+      </br>
+      <div class="form-group">
+          <input class="btn btn-lg btn-primary" type="submit" value="Update Record">
+      </div>
+    </form>
+  </div>
+
+
+  </body>
+</html>

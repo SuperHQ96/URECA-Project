@@ -1,0 +1,79 @@
+<% include ../../partials/header %>
+<% include ../../partials/navbar %>
+<script>
+  window.onload = function(){
+    $.get("/tracking_form_data")
+    .done(function(data){
+      window.course_codes = data;
+    });
+    var downloadButton = document.getElementById("downloadPdf");
+    downloadButton.style.display = "none";
+  }
+</script>
+<div class="container">
+  <h1>Single form</h1>
+  <form method="POST" action="/tracking_form/download">
+    <div class="form-group">
+      <select name="course_code" class="form-control">
+        <% course_codes.forEach(function(course_code, index){ %>
+          <option value="<%= course_code.course_code %>"><%= course_code.course_code %>
+          </option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="form-group">
+      <input class="btn btn-lg btn-primary" type="submit" value="Generate">
+    </div>
+  </form>
+  <h1>Generate All</h1>
+  <input class="btn btn-lg btn-primary" type="submit" value="Generate" onclick="generateDocx()">
+  </br>
+  <p id="statusText"></p>
+  <form method = "POST" action="/tracking_form/all">
+    <input class="btn btn-lg btn-primary" type="submit" value="Download" id="downloadPdf">
+  </form>
+</div>
+<script type="text/javascript">
+  function generateDocx() {
+    document.getElementById("statusText").innerHTML = "Generating...";
+    $.post('/tracking_form/generatedocx').done(function(data){
+      generatePDF();
+    });
+  }
+  async function generatePDF() {
+    document.getElementById("statusText").innerHTML = "Finished generating. Please wait awhile before merging for the files to be saved on disk.";
+    await course_codes.forEach(async function (course_code, index){
+        await $.post('tracking_form/generatepdf', {course_code : course_code.course_code}).done(function(data){
+          document.getElementById("statusText").innerHTML = "Generated " + index + " of " + course_codes.length;
+        })
+
+    })
+    setTimeout(mergePDF, (10000 * course_codes.length + 10000));
+  }
+  function mergePDF() {
+    document.getElementById("statusText").innerHTML = "Merging...";
+    var merged = false;
+    $.post('tracking_form/merge').done(function(data){
+      if(data.merged){
+        document.getElementById("statusText").innerHTML = "Successfully merged";
+        var downloadButton = document.getElementById("downloadPdf");
+        downloadButton.style.display = "block";
+        merged = true;
+      }
+    })
+    if(!merged) {
+      var clearIntervalCode = setInterval(function(){
+        $.post('tracking_form/merge').done(function(data){
+          if(data.merged){
+            clearInterval(clearIntervalCode);
+            document.getElementById("statusText").innerHTML = "Successfully merged";
+            var downloadButton = document.getElementById("downloadPdf");
+            downloadButton.style.display = "block";
+          }
+        })
+      }, 10000);
+    }
+  }
+</script>
+</body>
+</html>

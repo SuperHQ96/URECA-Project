@@ -1,0 +1,79 @@
+<% include ../../../partials/header %>
+<% include ../../../partials/navbar %>
+<div class="container">
+  <form action="/papers/new" method="GET">
+    <h1>Papers<input class="btn btn-md btn-default" type="submit" value="New Paper" style="float: right"></h1>
+  </form>
+  <div>
+
+    <div class="dropdown" style = "float: right; display: inline;">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Year<span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="#">All</a></li>
+        <% years.forEach(function(year){ %>
+          <li><a href="#"><%= year.paperYear %></a></li>
+        <% }) %>
+      </ul>
+    </div>
+    <div class="dropdown" style = "float: right;display: inline; padding-right: 10px;">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Semester<span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="#">All</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+      </ul>
+    </div>
+    <div class="dropdown" style = "float: right; display: inline; padding-right: 10px;">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User<span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="#">All</a></li>
+        <% users.forEach(function(user){ %>
+          <li><a href="#"><%= user.username %></a></li>
+        <% }) %>
+      </ul>
+    </div>
+    <h2 style="display: inline; float: right; margin: 0px 0px 0px 0px; padding-right: 10px;">Filters: </h2>
+  </div>
+
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Course Code</th>
+        <th scope="col">Year</th>
+        <th scope="col">Semester</th>
+        <th scope="col">User</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% papers.forEach(function (paper){ %>
+        <tr>
+
+          <td><%= paper.course_code %></td>
+          <td><%= paper.paperYear %></td>
+          <td><%= paper.paperSem %></td>
+          <td><%= paper.username %></td>
+          <td>
+            <form method="POST" action="/paper/update">
+              <input type="hidden" name="paper_id" value="<%= paper.paperID %>">
+              <input class="btn btn-sm btn-primary btn-block" type="submit" value="Update">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="">
+              <input type="hidden" name="paper_id" value="<%= paper.paperID %>">
+              <input class="btn btn-sm btn-danger btn-block" type="submit" value="Delete">
+            </form>
+          </td>
+
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+
+</div>
+</body>
+</html>

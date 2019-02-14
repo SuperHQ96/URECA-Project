@@ -1,0 +1,35 @@
+<% include ../../../partials/header %>
+<% include ../../../partials/navbar %>
+
+  <div class="container">
+    <h1>Update fields for course <%= course.course_code %></h1>
+    <form action="/database/course/updating" method="post">
+      <div class="form-group row">
+          <div class="col-xs-8">
+            <h2>Alternative Course Code</h2>
+            <input class="form-control" type="text" name="alternative_course_code" placeholder="Alternative course code" value="<%= course.alternative_course_code %>">
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-xs-8">
+            <h2>Course Title</h2>
+            <input class="form-control" type="text" name="course_title" placeholder="Course title" value="<%= course.course_title %>">
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-xs-8">
+            <h2>Area Code</h2>
+            <input class="form-control" type="text" name="area_code" placeholder="Area code" value="<%= course.area_code %>">
+          </div>
+      </div>
+      <input type="hidden" name="course_code" value="<%= course.course_code %>">
+      </br>
+      <div class="form-group">
+          <input class="btn btn-lg btn-primary" type="submit" value="Update Record">
+      </div>
+    </form>
+  </div>
+
+
+  </body>
+</html>

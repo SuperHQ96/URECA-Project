@@ -1,0 +1,49 @@
+<% include ../../../partials/header %>
+<% include ../../../partials/navbar %>
+<div class="container">
+  <form action="/database/faculty_staff/new" method="GET">
+    <h1>Faculty Staff<input class="btn btn-md btn-default" type="submit" value="New Record" style="float: right"></h1>
+  </form>
+  </br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Initial</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email Address</th>
+        <th scope="col">Current Appointment</th>
+        <th scope="col">Area Code</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% faculty_staff.forEach(function (staff){ %>
+        <tr>
+
+          <th scope="row"><%= staff.initial %></th>
+          <td><%= staff.faculty_name %></td>
+          <td><%= staff.email_address %></td>
+          <td><%= staff.current_appointment %></td>
+          <td><%= staff.area_code %></td>
+          <td>
+            <form method="POST" action="/database/faculty_staff/update">
+              <input type="hidden" name="initial" value="<%= staff.initial %>">
+              <input class="btn btn-sm btn-primary btn-block" type="submit" value="Update">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="/database/faculty_staff/delete">
+              <input type="hidden" name="initial" value="<%= staff.initial %>">
+              <input class="btn btn-sm btn-danger btn-block" type="submit" value="Delete">
+            </form>
+          </td>
+
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<% include ../../../partials/header %>
+<% include ../../../partials/navbar %>
+<div class="container">
+  <form action="/due_date/new" method="GET">
+    <h1>Due Dates<input class="btn btn-md btn-default" type="submit" value="New Due Date" style="float: right"></h1>
+  </form>
+  </br>
+  <div>
+
+    <div class="dropdown" style = "float: right; display: inline;">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Year<span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="#">All</a></li>
+        <% years.forEach(function(year){ %>
+          <li><a href="#"><%= year.paperYear %></a></li>
+        <% }) %>
+      </ul>
+    </div>
+    <div class="dropdown" style = "float: right; display: inline; padding-right: 10px;">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Semester<span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="#">All</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+      </ul>
+    </div>
+    <h2 style="display: inline; float: right; margin: 0px 0px 0px 0px; padding-right: 10px;">Filters: </h2>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Description</th>
+        <th scope="col">Add To Paper</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% due_dates.forEach(function (due_date){ %>
+        <tr>
+
+          <th scope="row"><%= due_date.dueDate %></th>
+          <td><%= due_date.dueDateDescription %></td>
+          <td>
+            <form method="POST" action="/due_date/add">
+              <input type="hidden" name="paper_id" value="<%= due_date.dueDateCode %>">
+              <input type="hidden" name="due_date" value="<%= due_date.dueDate %>">
+              <input class="btn btn-sm btn-primary btn-block" type="submit" value="Add">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="">
+              <input type="hidden" name="paper_id" value="<%= due_date.dueDateCode %>">
+              <input class="btn btn-sm btn-danger btn-block" type="submit" value="Delete">
+            </form>
+          </td>
+
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+
+</div>
+</body>
+</html>

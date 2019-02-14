@@ -1,0 +1,47 @@
+<% include ../../../partials/header %>
+<% include ../../../partials/navbar %>
+<div class="container">
+  <form action="/database/course/new" method="GET">
+    <h1>Courses<input class="btn btn-md btn-default" type="submit" value="New Record" style="float: right"></h1>
+  </form>
+  </br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Course Code</th>
+        <th scope="col">Alternative Course Code</th>
+        <th scope="col">Course Title</th>
+        <th scope="col">Area Code</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% courses.forEach(function (course){ %>
+        <tr>
+
+          <th scope="row"><%= course.course_code %></th>
+          <td><%= course.alternative_course_code %></td>
+          <td><%= course.course_title %></td>
+          <td><%= course.area_code %></td>
+          <td>
+            <form method="POST" action="/database/course/update">
+              <input type="hidden" name="course_code" value="<%= course.course_code %>">
+              <input class="btn btn-sm btn-primary btn-block" type="submit" value="Update">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="/database/course/delete">
+              <input type="hidden" name="course_code" value="<%= course.course_code %>">
+              <input class="btn btn-sm btn-danger btn-block" type="submit" value="Delete">
+            </form>
+          </td>
+
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

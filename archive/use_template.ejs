@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Use template</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		function loadUser() {
+		  var template = $('#template').html();
+		  Mustache.parse(template);   // optional, speeds up future uses
+		  var rendered = Mustache.render(template, {area_code: '<%= results.area_code %>', area_lead: '<%= results.area_lead %>', area_lead_email: '<%= results.area_lead_email %>', area_admin: '<%= results.area_admin %>', area_admin_email: '<%= results.area_admin_email %>'});
+		  $('#target').html(rendered);
+		}
+	</script>
+	<style>
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+</style>
+</head>
+<body onload="loadUser()">
+	<% include ../partials/navbar %>
+    <div class="container">
+    	<h1>Template</h1>
+    	<div id="target">Loading...</div>
+    </div>
+	<script id="template" type="x-tmpl-mustache">
+	<p>The area selected is {{area_code}} and the area lead is {{area_lead}} whose email is {{area_lead_email}}. The area admin is {{area_admin}} whose email is {{area_admin_email}}.</p>
+	</script>
+</body>
+</html>

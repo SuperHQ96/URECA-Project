@@ -1,0 +1,73 @@
+// router.post('/oas_form/all', (req, res) => {
+//   console.log("In post route");
+//   var fileLocation = path.join(__dirname, 'merged.pdf');
+// 	res.download('C:\\xampp\\htdocs\\downloads\\merged.pdf', 'merged.pdf');
+//   console.log(__dirname);
+// })
+
+// router.post('/oas_form/all', (req, res) => {
+//   var zip = new JSZip(oas_form);
+// 	var doc = new Docxtemplater();
+// 	doc.loadZip(zip);
+//   connection.query('SELECT course_code, course_title, area_code, faculty_name AS course_coordinator, area_admin FROM faculty_staff NATURAL JOIN (SELECT course_code, course_title, area_code, initial, area_admin FROM coordinators NATURAL JOIN (SELECT * FROM courses NATURAL JOIN area) AS SUBQUERY) AS SUBQUERY2 ORDER BY faculty_name;', async function(error, results, fields){
+// 		if(error) throw error;
+// 			results.forEach(async (result, index) => {
+//         doc.setData({
+//       	    course_code: result.course_code,
+//       	    course_title: result.course_title,
+//       	    area_code: result.area_code,
+//       	    course_coordinator: result.course_coordinator,
+//       			area_admin: result.area_admin
+//       	});
+//       	try {
+//       	    // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
+//       	    doc.render()
+//       	}
+//       	catch (error) {
+//       	    var e = {
+//       	        message: error.message,
+//       	        name: error.name,
+//       	        stack: error.stack,
+//       	        properties: error.properties,
+//       	    }
+//       	    console.log(JSON.stringify({error: e}));
+//       	    // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
+//       	    throw error;
+//       	}
+//       	var buf = doc.getZip().generate({type: 'nodebuffer'});
+//
+//       	// buf is a nodejs buffer, you can either write it to a file or do anything else with it.
+//       	fs.writeFileSync(path.resolve('./downloads', 'oas_form' + index + '.docx'), buf);
+//         await cmd.run('"\\xampp\\htdocs\\LibreOffice\\program\\python.exe" unoconv -f pdf "\\xampp\\htdocs\\downloads\\oas_form' + index + '.docx"');
+//       if(results.length > 1)
+//       var mergingArray = new Array();
+//       for(var index = 0; index < results.length ; index++) {
+//         mergingArray.push(__dirname + '\\downloads\\oas_form' + index + '.pdf');
+//         // if(!fileExists.sync('.\\downloads\\oas_form' + index + '.pdf')) {
+//         //   await cmd.run('"\\xampp\\htdocs\\LibreOffice\\program\\python.exe" unoconv -f pdf "\\xampp\\htdocs\\downloads\\oas_form' + index + '.docx"');
+//         //   mergingArray.push(__dirname + '\\downloads\\oas_form' + index + '.pdf');
+//         // } else {
+//         //   mergingArray.push(__dirname + '\\downloads\\oas_form' + index + '.pdf');
+//         // }
+//       }
+//       await merge(mergingArray,'./downloads/merged.pdf',function(err){
+//
+//               if(err)
+//               return console.log(err);
+//
+//               console.log('Successfully merged!');
+//
+//       });
+//       while(!fileExists.sync('.\\downloads\\merged.pdf')) {}
+//       var fileLocation = path.join('./downloads', 'merged.pdf');
+//     	res.download(fileLocation, 'merged.pdf');
+// 		})
+//     })
+// })
+
+// router.get('/download/:file(*)',(req, res) => {
+//   var file = req.params.file;
+//   var fileLocation = path.join('../downloads',file);
+//   console.log(fileLocation);
+//   res.download(fileLocation, file);
+// });

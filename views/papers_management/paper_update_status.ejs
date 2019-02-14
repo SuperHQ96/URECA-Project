@@ -1,0 +1,33 @@
+<% include ../../partials/header %>
+<% include ../../partials/navbar %>
+  <div class="container">
+    <h1>Update status for <%= paper.course_code %> (Y<%= paper.paperYear %> Semester <%= paper.paperSem %>)</h1>
+    <form action="/paper_updating_status" method="post">
+      <div class="form-group row">
+        <div class="col-md-4">
+          <h2>Status</h2>
+          <select class="form-control" name="status">
+              <option value="Area Admin">Area Admin</option>
+              <option value="Examiners">Examiners</option>
+              <option value="Area Lead">Area Lead</option>
+              <option value="ACA">ACA</option>
+              <option value="Completed">Completed</option>
+              <option value="Chair's Office">Chair's Office</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-4">
+          <h2>Remarks</h2>
+          <textarea class="form-control" rows="5" name="remarks"></textarea>
+        </div>
+      </div>
+      <input type="hidden" name="paperID" value="<%= paperID %>">
+      </br>
+      <div class="form-group">
+          <input class="btn btn-lg btn-primary" type="submit" value="Update">
+      </div>
+    </form>
+  </div>
+</body>
+</html>

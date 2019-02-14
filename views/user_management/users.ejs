@@ -1,0 +1,50 @@
+<% include ../../partials/header %>
+<% include ../../partials/navbar %>
+
+<div class="container">
+  <form action="/users/new" method="GET">
+    <h1>Users<input class="btn btn-md btn-default" type="submit" value="New User" style="float: right"></h1>
+  </form>
+  </br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Username</th>
+        <th scope="col">Assign Papers</th>
+        <th scope="col">Change Password</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(function(user, index){ %>
+        <tr>
+
+          <th scope="row"><%= user.username %></th>
+          <td>
+            <form method="POST" action="/user/assign_paper">
+              <input type="hidden" name="username" value="<%= user.username %>">
+              <input class="btn btn-sm btn-primary btn-block" type="submit" value="Assign Papers">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="/user/change_password">
+              <input type="hidden" name="username" value="<%= user.username %>">
+              <input class="btn btn-sm btn-primary btn-block" type="submit" value="Change Password">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="/user/delete">
+              <input type="hidden" name="username" value="<%= user.username %>">
+              <input class="btn btn-sm btn-danger btn-block" type="submit" value="Delete">
+            </form>
+          </td>
+
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>New</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+        <!-- include summernote css/js -->
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+        <script src="http://lqez.github.io/summernote-ext-print/summernote-ext-print.js" rel="text/javascript"></script>
+        <script rel = "text/javascript">
+        </script>
+        <style>
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+</style>
+    </head>
+    <body>
+      <% include ../partials/navbar %>
+    <script type="text/javascript" >
+function showinnerhtml() {
+var data = $('#summernote').summernote('code');
+
+console.log(data);
+ }
+
+</script>
+
+<form action="newtemplate" method="POST">
+	<div class = "container" style="margin: 0 auto;">
+		<h1 style="text-align: center">Create a new template</h1>
+		<h2>Please enter the template name:</h2>
+		<div class="form-group">
+			<input class="form-control" type="text" name="templatename" required>
+		</div>
+		<div id="summernote"></div>
+		<div class="form-group">
+			<input class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" onclick="showinnerhtml()">
+		</div>
+	</div>
+</form>
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+		  height: 1025,                 // set editor height
+		  minHeight: null,             // set minimum height of editor
+		  maxHeight: 1025,             // set maximum height of editor
+		  width: 800,
+		  focus: true,                  // set focus to editable area after initializing summernote
+		  toolbar: [
+		    // [groupName, [list of button]]
+		    ['style', ['fontname', 'bold', 'italic', 'underline', 'clear']],
+		    ['font', ['strikethrough', 'superscript', 'subscript', 'fontsize']],
+		    ['color', ['color']],
+		    ['para', ['style', 'ul', 'ol', 'paragraph']],
+		    ['height', ['height']],
+		    ['insert', ['picture', 'link', 'video','table', 'hr']],
+		    ['misc', ['fullscreen', 'undo', 'redo', 'help']],
+		    ['misc', ['print']],
+		    ['mybutton',['paperSize']]
+		  ]
+		});
+    });
+  </script>
+</body>
+</html>

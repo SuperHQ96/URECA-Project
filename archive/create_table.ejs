@@ -1,0 +1,43 @@
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+
+  <div class="container">
+    <div class="col-md-7"><h1>Create new table</h1></div>
+    <div class="col-md-5" style="margin-top: 5px;"><button style="border-radius: 50px 50px; background-color: white; color: black; border: 2px solid gray; font-size: 40px; float: right; padding: 5px 10px;"> + Add new column</button></div>
+    <div class="container" style="margin-top: 100px;">
+      <form action="" method="post">
+        <label style="font-size: 30px;">Table Name: <input id="table_name" type="text" style="border-radius: 4px
+        ; border: 1px solid gray;" required></label>
+        <ul "list-group" style="padding-left: 0px; padding-top: 10px">
+          <li class="list-group-item">
+              <label style="font-size: 20px">Column Name: <input id="column1name" name="colname" type="text" style="border-radius: 4px
+        ; border: 1px solid gray;" required></label>
+              </br>
+              <label for="datatype1" style="font-size: 20px">Data type: </label>
+              <select id="datatype1" name="datatype" required>
+                <option value="Integer">Integer</option>
+                <option value="String">String</option>
+              </select>
+              <label for="required1">Required</label>
+              <input id = "required1" type="radio" name="requiredornot1">
+              <label for="notrequired1">Not required</label>
+              <input id="notrequired1" type="radio" name="requiredornot1">
+          </li>
+          <li class="list-group-item">
+              <label style="font-size: 20px">Column Name: <input id="column1name" name="colname" type="text" style="border-radius: 4px
+        ; border: 1px solid gray;" required></label>
+              </br>
+              <label for="datatype1" style="font-size: 20px">Data type: </label>
+              <select id="datatype1" name="datatype" required>
+                <option value="Integer">Integer</option>
+                <option value="String">String</option>
+              </select>
+              <button type="button" class="btn btn-light" style="float: right;">Remove Column</button>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

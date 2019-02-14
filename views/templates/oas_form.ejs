@@ -1,0 +1,86 @@
+<% include ../../partials/header %>
+<% include ../../partials/navbar %>
+  <script>
+    window.onload = function(){
+      $.get("/oas_form_data")
+      .done(function(data){
+        window.data = data;
+        document.getElementById("courseCode").setAttribute("value", data[0].course_code);
+        document.getElementById("courseTitle").setAttribute("value", data[0].course_title);
+        document.getElementById("areaCode").setAttribute("value", data[0].area_code);
+        document.getElementById("courseCoordinator").setAttribute("value", data[0].course_coordinator);
+        document.getElementById("areaAdmin").setAttribute("value", data[0].area_admin);
+      });
+      var downloadButton = document.getElementById("downloadPdf");
+      downloadButton.style.display = "none";
+    }
+  </script>
+  <div class="container">
+    <h1>Single form</h1>
+    <form method="POST" action="/oas_form/download">
+      <div class="form-group">
+        <select id="course_code_selector" onchange="selectorChange()" class="form-control">
+          <% data.forEach(function(dataRow, index){ %>
+            <option value="<%= index %>"><%= dataRow.course_code %>
+            </option>
+          <% }) %>
+        </select>
+        <input id = "courseCode" type="hidden" name="course_code" value="">
+        <input id = "courseTitle" type="hidden" name="course_title" value="">
+        <input id = "areaCode" type="hidden" name="area_code" value="">
+        <input id = "courseCoordinator" type="hidden" name="course_coordinator" value="">
+        <input id = "areaAdmin" type="hidden" name="area_admin" value="">
+      </div>
+      <div class="form-group">
+        <input class="btn btn-lg btn-primary" type="submit" value="Generate">
+      </div>
+    </form>
+    <h1>Generate All</h1>
+    <input class="btn btn-lg btn-primary" type="submit" value="Generate" onclick="generateAll()">
+    </br>
+    <p id="statusText"></p>
+    <form method = "POST" action="/oas_form/all">
+      <input class="btn btn-lg btn-primary" type="submit" value="Download" id="downloadPdf">
+    </form>
+  </div>
+  <script type="text/javascript">
+    function selectorChange() {
+      var index = document.getElementById("course_code_selector").value;
+      document.getElementById("courseCode").setAttribute("value", data[index].course_code);
+      document.getElementById("courseTitle").setAttribute("value", data[index].course_title);
+      document.getElementById("areaCode").setAttribute("value", data[index].area_code);
+      document.getElementById("courseCoordinator").setAttribute("value", data[index].course_coordinator);
+      document.getElementById("areaAdmin").setAttribute("value", data[index].area_admin);
+    }
+    function generateAll() {
+      document.getElementById("statusText").innerHTML = "Generating...";
+      $.post('/oas_form/generate').done(function(data){document.getElementById("statusText").innerHTML = "Finished generating. Please wait awhile before merging for the files to be saved on disk.";});
+      setTimeout(mergePDF, 60000);
+    }
+    function mergePDF() {
+      document.getElementById("statusText").innerHTML = "Merging...";
+      var merged = false;
+      $.post('oas_form/merge', {noOfFiles: data.length}).done(function(data){
+        if(data.merged){
+          document.getElementById("statusText").innerHTML = "Successfully merged";
+          var downloadButton = document.getElementById("downloadPdf");
+          downloadButton.style.display = "block";
+          merged = true;
+        }
+      })
+      if(!merged) {
+        var clearIntervalCode = setInterval(function(){
+          $.post('oas_form/merge', {noOfFiles: data.length}).done(function(data){
+            if(data.merged){
+              clearInterval(clearIntervalCode);
+              document.getElementById("statusText").innerHTML = "Successfully merged";
+              var downloadButton = document.getElementById("downloadPdf");
+              downloadButton.style.display = "block";
+            }
+          })
+        }, 10000);
+      }
+    }
+  </script>
+</body>
+</html>

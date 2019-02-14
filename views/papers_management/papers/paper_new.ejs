@@ -1,0 +1,63 @@
+<% include ../../../partials/header %>
+<% include ../../../partials/navbar %>
+<div class="container">
+  <h1>Add New Paper</h1>
+  <form action="#" method="post">
+    <div class="form-group row">
+      <div class="col-xs-4">
+        <h2>Course Code</h2>
+        <select class="form-control" name="course_code">
+          <% course_codes.forEach(function(course_code){ %>
+            <option value="<%= course_code.course_code %>"><%= course_code.course_code %></option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-xs-4">
+        <h2>
+          Chair Review?
+        </h2>
+        <label class="radio-inline"><input type="radio" name="chair_review" value = 1>Yes</label>
+        <label class="radio-inline"><input type="radio" name="chair_review" checked value = 0>No</label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-xs-4">
+        <h2>Year</h2>
+        <select class="form-control" name="year">
+          <% for(var i = 2000; i<2050; i++){ %>
+            <option value= <%= i %>><%= i %></option>
+          <% } %>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-xs-4">
+        <h2>Semester</h2>
+        <select class="form-control" name="semester">
+          <% for(var j = 1; j<3; j++){ %>
+            <option value= <%= j %>><%= j %></option>
+          <% } %>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-xs-4">
+        <h2>User</h2>
+        <select class="form-control" name="user">
+            <option value="None">None</option>
+            <% users.forEach(function(user){ %>
+              <option value= "<%= user.username %>"><%= user.username %></option>
+            <% }) %>
+        </select>
+      </div>
+    </div>
+  </br>
+  <div class="form-group">
+      <input class="btn btn-lg btn-primary" type="submit" value="Add paper">
+  </div>
+  </form>
+</div>
+</body>
+</html>
